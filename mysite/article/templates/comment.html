@@ -1,0 +1,27 @@
+<li class="list-group-item">
+    <p><strong>{{ comment.comment_author }}</strong></p>
+    <p><em>{{ comment.date_pub }}</em></p>
+    <p>{{ comment.comment_text }}</p>   
+    {% if comment.has_children %}
+        <ul>
+            {% for ch in comment.get_children %}
+                {% with comment=ch template_name="comment.html" %}{% include template_name %}{% endwith %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <p>
+        <a class="btn btn-primary" data-toggle="collapse" href="#Comment{{ comment.get_id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+          Reply
+        </a>
+    </p>
+    <div class="collapse" id="Comment{{ comment.get_id }}">
+        <div class="form-group">
+            <form action="{% url 'article:submitReply' comment.id %}" method="post">
+                {% csrf_token %}
+                <textarea class="form-control" id="reply_text" name="reply_text" placeholder="Write your reply here" rows="3"></textarea><br><br>
+                <button type="submit" class="btn btn-primary">Submit Comment</button>
+            </form>
+        </div>
+    </div>
+</li>
+<br>
