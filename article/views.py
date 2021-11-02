@@ -36,7 +36,7 @@ def submitReply(request, comment_id):
         print('reply error')
         print("reply exception:",e)
         return render(request, 'article.html', {
-            'comments_list':Comment.objects.order_by('-date_pub'),
+            'comments_list':Comment.objects.filter(parent_comment=None).order_by('-date_pub'),
             'article': Article.objects.all()[0]
         })
     return HttpResponseRedirect(reverse('article:article'))

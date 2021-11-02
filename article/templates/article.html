@@ -19,6 +19,9 @@
                 </div>
                 <br>
                 {% autoescape off %}{{ article.article_text }}{% endautoescape %}
+                <br>
+                <p><em>Author: {{ article.article_author }}</em></p>
+                <p><em>Published on: {{ article.date_pub }}</em></p>
             {% else %}
                 No article yet</p>
             {% endif %}
